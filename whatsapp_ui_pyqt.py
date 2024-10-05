@@ -37,19 +37,19 @@ class Window(QMainWindow):
         layout.addStretch(2)
 
         image_label = QLabel(self)
-        pixmap = QPixmap("https://gurpreetsingh.aliens.school/whatsapp.png")
+        pixmap = QPixmap("whatsapp.png")
         image_label.setPixmap(pixmap)
         image_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(image_label)
 
-        # Create "Welcome to WhatsApp" text label
+ 
         label1 = TitleLabel("Welcome to WhatsApp")
         font1 = QFont()
-        font1.setPointSize(20)  # Set font size for the welcome text
+        font1.setPointSize(20)  
         label1.setFont(font1)
-        label1.setStyleSheet("font-weight: bold;")  # Make text bold
+        label1.setStyleSheet("font-weight: bold;")  
         label1.setAlignment(Qt.AlignCenter)  # Align the label to the center
-        label1.setTextColor(QColor(0, 0, 0), QColor(255, 255, 255))  # Light theme, dark theme
+        label1.setTextColor(QColor(0, 0, 0), QColor(255, 255, 255)) 
         layout.addWidget(label1)
 
         label2 = TitleLabel("A simpel,reliable,and private way to use whatsapp on your computer")
