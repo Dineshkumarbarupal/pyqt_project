@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtWidgets import QApplication, QMainWindow,QBoxLayout, QWidget, QVBoxLayout, QLabel, QPushButton
-from PyQt5.QtGui import QColor, QFont,QPixmap
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QStackedWidget, QWidget, QSizePolicy, QSpacerItem
+from PyQt5.QtGui import QColor, QFont, QPixmap
 
 class TitleLabel(QLabel):
     def __init__(self, text):
@@ -11,11 +11,11 @@ class TitleLabel(QLabel):
         self.setStyleSheet(f"color:rgb({light_color.red()},{light_color.green()},{light_color.blue()});")
 
 class PrimaryPushButton(QPushButton):
-    def __init__(self,text):
+    def __init__(self, text):
         super().__init__(text)
         self.setStyleSheet("background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px;")
-        self.setFont(QFont("Alice", 12))
-        self.setFixedSize(200,33)
+        self.setFont(QFont("Alice", 11))
+        self.setFixedSize(200, 38)
 
 class Window(QMainWindow):
 
@@ -30,54 +30,142 @@ class Window(QMainWindow):
         w, h = desktop.width(), desktop.height()
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
 
-        central_widget = QWidget(self)
-        self.setCentralWidget(central_widget)
-        layout = QVBoxLayout(central_widget)
+        # Central widget
+        self.central_widget = QStackedWidget(self)
+        self.setCentralWidget(self.central_widget)
 
-        layout.addStretch(2)
+        # First Page
+        self.first_page = QWidget()
+        layout1 = QVBoxLayout(self.first_page)
 
-        image_label = QLabel(self)
+        layout1.addStretch(2)
+
+        image_label = QLabel(self.first_page)
         pixmap = QPixmap("whatsapp.png")
         image_label.setPixmap(pixmap)
         image_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(image_label)
+        layout1.addWidget(image_label)
 
- 
+        layout1.addStretch(1)
+
         label1 = TitleLabel("Welcome to WhatsApp")
         font1 = QFont()
-        font1.setPointSize(20)  
+        font1.setPointSize(20)
         label1.setFont(font1)
-        label1.setStyleSheet("font-weight: bold;")  
-        label1.setAlignment(Qt.AlignCenter)  # Align the label to the center
-        label1.setTextColor(QColor(0, 0, 0), QColor(255, 255, 255)) 
-        layout.addWidget(label1)
+        label1.setStyleSheet("font-weight: bold;")
+        label1.setAlignment(Qt.AlignCenter)
+        label1.setTextColor(QColor(0, 0, 0), QColor(255, 255, 255))
+        layout1.addWidget(label1)
 
-        label2 = TitleLabel("A simpel,reliable,and private way to use whatsapp on your computer")
+        layout1.addStretch(1)
+
+        label2 = TitleLabel("A simple, reliable, and private way to use WhatsApp on your computer")
         font2 = QFont()
         font2.setPointSize(10)
         label2.setFont(font2)
         label2.setStyleSheet("font-weight: light;")
         label2.setAlignment(Qt.AlignCenter)
-        label2.setTextColor(QColor(0,0,0),QColor(255,255,255))
-        layout.addWidget(label2)
+        label2.setTextColor(QColor(0, 0, 0), QColor(255, 255, 255))
+        layout1.addWidget(label2)
 
-        # layout.addStretch(0)
+        layout1.addStretch(1)
 
         button = PrimaryPushButton('Get started')
-        layout.addWidget(button, alignment=Qt.AlignCenter)
-        
+        button.clicked.connect(self.show_second_page)
+        layout1.addWidget(button, alignment=Qt.AlignCenter)
+
+        layout1.addStretch(1)
 
         label3 = TitleLabel("Version 2.2238.6.0")
         font3 = QFont()
         font3.setPointSize(9)
         label3.setFont(font3)
         label3.setAlignment(Qt.AlignCenter)
-        layout.addWidget(label3)
+        layout1.addWidget(label3)
 
-        layout.addStretch(1)
+        layout1.addStretch(3)
+
+      
+        self.central_widget.addWidget(self.first_page)
+
+    
+        self.second_page = QWidget()
+        self.init_ui() 
+        self.central_widget.addWidget(self.second_page)
+
+    def show_second_page(self):
+        """Switch to second page when button is clicked"""
+        self.central_widget.setCurrentWidget(self.second_page) 
+
+    def init_ui(self):
+      
+        outer_layout = QVBoxLayout(self.second_page)
+        outer_layout.setContentsMargins(20, 20, 20, 20)
+        outer_layout.addStretch(1)  
+
+        
+        central_frame = QFrame(self.second_page)
+        central_frame.setStyleSheet("background-color: white; border-radius: 10px;")
+        central_layout = QVBoxLayout(central_frame)
+
+        central_frame.setMinimumSize(1000, 600)
+        central_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
+        central_layout.addStretch(1)
+
        
+        h_layout = QVBoxLayout() 
+
+        instructions = QLabel(self.second_page)
+        instructions.setText(
+            "<b>To set up WhatsApp on your computer</b><br><br>"
+            "<span style='color: gray;'>1. Open WhatsApp on your phone</span><br><br>"
+            "<span style='color: gray;'>2. Tap <b>Menu</b> on Android, or <b>Settings</b> on iPhone</span><br><br>"
+            "<span style='color: gray;'>3. Tap <b>Linked devices</b> and then <b>Link a device</b></span><br><br>"
+            "<span style='color: gray;'>4. Point your phone at this screen to capture the QR code</span>"
+        )
+        instructions.setAlignment(Qt.AlignLeft)
+        instructions.setWordWrap(True)
+        instructions.setFont(QFont("Arial", 12))
+        instructions.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        
+        instructions.setStyleSheet("padding-left: 30px; line-height: 35px;")
+
+        h_layout.addWidget(instructions)
+
+       
+        spacer = QSpacerItem(100, 20, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        h_layout.addSpacerItem(spacer)
+
+        link_label = QLabel(self.second_page)
+        link_label.setText('<a href="#">Link with phone number</a>')
+        link_label.setAlignment(Qt.AlignLeft)
+        link_label.setFont(QFont("Arial", 10, QFont.Bold))
+        link_label.setOpenExternalLinks(True)
+
+        link_label.setStyleSheet("padding-left: 33px;")  
+        h_layout.addWidget(link_label)
+
+        qr_label = QLabel(self.second_page)
+        pixmap = QPixmap("qr2.png")  
+        qr_label.setPixmap(pixmap)
+        qr_label.setAlignment(Qt.AlignCenter) 
+        qr_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        h_combined_layout = QHBoxLayout()
+        h_combined_layout.addLayout(h_layout, stretch=4) 
+        h_combined_layout.addWidget(qr_label, stretch=3)
+
+        central_layout.addLayout(h_combined_layout)
+
+        central_layout.addStretch(1)
+
+        outer_layout.addWidget(central_frame, alignment=Qt.AlignCenter)
+        outer_layout.addStretch(1)  
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     w = Window()
     w.show()
-    app.exec_()
+    sys.exit(app.exec_())
