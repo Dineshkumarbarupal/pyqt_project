@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QVBoxLayout, QHBo
 from PyQt5.QtGui import QColor, QFont, QPixmap
 
 class TitleLabel(QLabel):
+    
     def __init__(self, text):
         super().__init__(text)
 
@@ -29,11 +30,10 @@ class Window(QMainWindow):
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
-
-        # Central widget
+       
         self.central_widget = QStackedWidget(self)
         self.setCentralWidget(self.central_widget)
-
+      
         # First Page
         self.first_page = QWidget()
         layout1 = QVBoxLayout(self.first_page)
@@ -85,13 +85,17 @@ class Window(QMainWindow):
 
         layout1.addStretch(3)
 
-      
         self.central_widget.addWidget(self.first_page)
-
     
+        # Second Page
         self.second_page = QWidget()
         self.init_ui() 
         self.central_widget.addWidget(self.second_page)
+
+        # Third Page (for Link with phone number)
+        self.third_page = QWidget()
+        self.init_third_page()  # Initialize third page
+        self.central_widget.addWidget(self.third_page)
 
     def show_second_page(self):
         """Switch to second page when button is clicked"""
@@ -99,11 +103,10 @@ class Window(QMainWindow):
 
     def init_ui(self):
       
-        outer_layout = QVBoxLayout(self.second_page)
+        outer_layout = QVBoxLayout()  # Remove the page assignment here
         outer_layout.setContentsMargins(20, 20, 20, 20)
         outer_layout.addStretch(1)  
-
-        
+      
         central_frame = QFrame(self.second_page)
         central_frame.setStyleSheet("background-color: white; border-radius: 10px;")
         central_layout = QVBoxLayout(central_frame)
@@ -112,28 +115,26 @@ class Window(QMainWindow):
         central_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         
         central_layout.addStretch(1)
-
-       
+      
         h_layout = QVBoxLayout() 
 
         instructions = QLabel(self.second_page)
         instructions.setText(
-            "<b>To set up WhatsApp on your computer</b><br><br>"
+            "<b style= 'font-size: 16px;'>To set up WhatsApp on your computer</b><br><br>"
             "<span style='color: gray;'>1. Open WhatsApp on your phone</span><br><br>"
             "<span style='color: gray;'>2. Tap <b>Menu</b> on Android, or <b>Settings</b> on iPhone</span><br><br>"
             "<span style='color: gray;'>3. Tap <b>Linked devices</b> and then <b>Link a device</b></span><br><br>"
             "<span style='color: gray;'>4. Point your phone at this screen to capture the QR code</span>"
         )
+
         instructions.setAlignment(Qt.AlignLeft)
         instructions.setWordWrap(True)
-        instructions.setFont(QFont("Arial", 12))
+        instructions.setFont(QFont("Arial", 11))
         instructions.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        
         instructions.setStyleSheet("padding-left: 30px; line-height: 35px;")
 
         h_layout.addWidget(instructions)
-
        
         spacer = QSpacerItem(100, 20, QSizePolicy.Minimum, QSizePolicy.Expanding)
         h_layout.addSpacerItem(spacer)
@@ -142,7 +143,8 @@ class Window(QMainWindow):
         link_label.setText('<a href="#">Link with phone number</a>')
         link_label.setAlignment(Qt.AlignLeft)
         link_label.setFont(QFont("Arial", 10, QFont.Bold))
-        link_label.setOpenExternalLinks(True)
+        link_label.setOpenExternalLinks(False)
+        link_label.linkActivated.connect(self.show_third_page)  
 
         link_label.setStyleSheet("padding-left: 33px;")  
         h_layout.addWidget(link_label)
@@ -154,7 +156,7 @@ class Window(QMainWindow):
         qr_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         h_combined_layout = QHBoxLayout()
-        h_combined_layout.addLayout(h_layout, stretch=4) 
+        h_combined_layout.addLayout(h_layout, stretch=0) 
         h_combined_layout.addWidget(qr_label, stretch=3)
 
         central_layout.addLayout(h_combined_layout)
@@ -163,6 +165,47 @@ class Window(QMainWindow):
 
         outer_layout.addWidget(central_frame, alignment=Qt.AlignCenter)
         outer_layout.addStretch(1)  
+        
+    
+    def init_third_page(self):
+        """Initialize the third page"""
+        outer2_layout = QVBoxLayout(self.third_page)  # Directly set the layout to the page
+
+        central2_frame = QFrame(self.third_page)
+        central2_frame.setStyleSheet("background-color: white; border-radius: 10px;")
+        central2_frame.setFixedSize(900, 600)
+        
+        central2_layout = QVBoxLayout(central2_frame)
+        
+        central2_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
+        # central2_layout.addStretch(1)
+
+        spacer = QSpacerItem(20, 50, QSizePolicy.Minimum, QSizePolicy.Expanding)  # adjust height as needed
+        central2_layout.addItem(spacer)
+
+        label = QLabel("Enter phone number", central2_frame)
+        label.setFont(QFont("Arial", 16))
+        label.setAlignment(Qt.AlignCenter)
+        central2_layout.addWidget(label)
+
+        central2_layout.addStretch(1)
+
+        label2 = QLabel("Select a country and your WhatsApp phone number", central2_frame)
+        label2.setFont(QFont("Arial",13))
+        label2.setAlignment(Qt.AlignCenter)
+        central2_layout.addWidget(label2)
+        central2_layout.addStretch(17)
+        
+        outer2_layout.addStretch(1)
+        outer2_layout.addWidget(central2_frame, alignment=Qt.AlignCenter)
+        outer2_layout.addStretch(1)
+
+        self.third_page.setLayout(outer2_layout) 
+
+    def show_third_page(self):
+        """Switch to the third page when link is clicked"""
+        self.central_widget.setCurrentWidget(self.third_page)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
