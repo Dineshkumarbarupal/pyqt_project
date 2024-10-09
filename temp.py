@@ -1,42 +1,42 @@
-import sys 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow,QApplication,QWidget,QVBoxLayout
-from PyQt5.QtGui import QIcon
-from qfluentwidgets import PushButton,FluentIcon,PrimaryToolButton
+import sys
+from PyQt5.QtCore import Qt,QUrl
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QMainWindow,  QApplication, QVBoxLayout,QWidget
+from qfluentwidgets import BodyLabel,HyperlinkLabel
+ # from qfluentwidgets import 
 
-class Mainwindow(QMainWindow):
+class mainwindow(QMainWindow):
     def __init__(self):
-        super().__init__()  
-        self.resize(900,400)  
-    
+        super().__init__()
+        self.init_window()
+
+    def init_window(self):
+        self.resize(900,600)
+
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout(central_widget)
 
-        button = PushButton('Standard push button')
-            
-        button.setFixedSize(200,60)
+
+        label = BodyLabel("Label")
+        label.setTextColor(QColor(0, 255, 0), QColor(255, 0, 0))  # Light theme, dark theme
+        label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(label)
+
+        layout.addSpacing(40)
+
+        label2 = HyperlinkLabel(QUrl('https://github.com/'), 'GitHub')
+        # hyperlinkLabel.setUnderlineVisible(True)
+        label2.setUrl('https://github.com/zhiyiYo/QMaterialWidgets')
+        layout.addWidget(label2)
+        layout.setAlignment(Qt.AlignCenter)
+        print(label2.url)
         
-        layout.addWidget(button)
-        layout.addWidget(button,alignment= Qt.AlignCenter)
-
-
-        button2 = PushButton(FluentIcon.FOLDER, 'Standard push button with icon')
-        button2 = PushButton(QIcon("/path/to/icon.png"), 'Standard push button with icon')
-        button2.setFixedSize(300,60)
-        layout.addWidget(button2)
-        layout.addWidget(button2,alignment= Qt.AlignCenter)
-        layout.addStretch(0)
-
-        button3 = PrimaryToolButton(FluentIcon.FOLDER)
-        button3 = PrimaryToolButton(QIcon("/path/to/icon.png"))
-        button3.setFixedSize(100,40)
-        layout.addWidget(button3)
-        layout.addWidget(button3,alignment= Qt.AlignCenter)
-
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = Mainwindow()
+    window = mainwindow()
     window.show()
     sys.exit(app.exec_())
+
+
+
