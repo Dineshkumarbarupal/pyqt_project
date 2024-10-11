@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFrame, QVBoxLayout, QHBoxLayout, QLabel, QStackedWidget, QWidget, QSizePolicy, QSpacerItem
+from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QFrame, QVBoxLayout, QHBoxLayout, QLabel, QStackedWidget, QWidget, QSizePolicy, QSpacerItem
 from PyQt5.QtGui import QFont, QPixmap
 from qfluentwidgets import PushButton, PrimaryPushButton, FluentIcon, TitleLabel, BodyLabel, DropDownPushButton, RoundMenu,Action, SplitPushButton
 
@@ -196,13 +196,19 @@ class Window(QMainWindow):
                 
         button = DropDownPushButton( 'Select contry/region')
 
-        # Create menu
         menu = RoundMenu(parent=button)
+
+        search_box = QLineEdit(menu)
+        search_box.setPlaceholderText("search contry/region")
+
+        menu.setFixedSize(200,100)
+        menu.layout().addWidget(search_box)
+        central2_layout.setAlignment(search_box,Qt.AlignCenter)
+
         menu.addAction(Action(FluentIcon.BASKETBALL, 'Basketball', triggered=lambda: print("What are you doing?")))
         menu.addAction(Action(FluentIcon.ALBUM, 'Sing', triggered=lambda: print("I like singing, rapping, and dancing")))
         menu.addAction(Action(FluentIcon.MUSIC, 'Music', triggered=lambda: print("Just because you are so beautiful")))
 
-        # Add menu
         button.setMenu(menu)
 
         button.setFixedSize(195,40)
@@ -210,8 +216,6 @@ class Window(QMainWindow):
         central2_layout.setAlignment(button,Qt.AlignCenter)
 
         central2_layout.addStretch(150)
-
-
         
         outer2_layout.addStretch(1)
         outer2_layout.addWidget(central2_frame, alignment=Qt.AlignCenter)
