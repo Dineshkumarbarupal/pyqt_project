@@ -1,32 +1,21 @@
-import sys
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow ,QApplication,QWidget,QVBoxLayout
-from PyQt5.QtGui import QIcon
-from qfluentwidgets import PushButton,FluentIcon
+# coding: utf-8
+from enum import Enum
 
-class Mainwindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.init_window()
-
-    def init_window(self):
-        self.resize(900,600)
+from qfluentwidgets import StyleSheetBase, Theme, isDarkTheme, qconfig
 
 
-        central_widget = QWidget()
-        layout = QVBoxLayout(central_widget)
-      
-        button = PushButton('Standard push button')
+class StyleSheet(StyleSheetBase, Enum):
+    """ Style sheet  """
 
-     
-        layout.addWidget(button)
-        layout.setAlignment(Qt.AlignCenter)
+    LINK_CARD = "link_card"
+    SAMPLE_CARD = "sample_card"
+    HOME_INTERFACE = "home_interface"
+    ICON_INTERFACE = "icon_interface"
+    VIEW_INTERFACE = "view_interface"
+    SETTING_INTERFACE = "setting_interface"
+    GALLERY_INTERFACE = "gallery_interface"
+    NAVIGATION_VIEW_INTERFACE = "navigation_view_interface"
 
-        self.setCentralWidget(central_widget)
-
-
-if __name__=='__main__':
-    app = QApplication(sys.argv)
-    w = Mainwindow()
-    w.show()
-    sys.exit(app.exec_())
+    def path(self, theme=Theme.AUTO):
+        theme = qconfig.theme if theme == Theme.AUTO else theme
+        return f":/gallery/qss/{theme.value.lower()}/{self.value}.qss"
