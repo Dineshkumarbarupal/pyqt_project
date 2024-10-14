@@ -59,6 +59,7 @@ class SecondPage(QWidget):
         central_frame = QFrame(self)
         central_frame.setStyleSheet("background-color: white; border-radius: 10px;")
         central_layout = QVBoxLayout(central_frame)
+        # central_layout.setAlignment(Qt.AlignCenter)
 
         central_frame.setMinimumSize(1000, 600)
         central_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -94,7 +95,7 @@ class SecondPage(QWidget):
         qr_label = QLabel(self)
         pixmap = QPixmap("qr2.png")  
         qr_label.setPixmap(pixmap)
-        qr_label.setAlignment(Qt.AlignCenter) 
+        qr_label.setAlignment(Qt.AlignRight) 
 
         central_layout.addWidget(qr_label)
 

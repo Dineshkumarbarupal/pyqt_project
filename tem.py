@@ -1,21 +1,30 @@
-# coding: utf-8
-from enum import Enum
+import sys 
+from PyQt5.QtWidgets import QMainWindow,QApplication,QWidget,QVBoxLayout
+from PyQt5.QtCore import Qt
+from qfluentwidgets import PrimaryPushButton
 
-from qfluentwidgets import StyleSheetBase, Theme, isDarkTheme, qconfig
+class Mainwindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.init_ui()
+
+    def init_ui(self):
+        self.resize(800,500)
 
 
-class StyleSheet(StyleSheetBase, Enum):
-    """ Style sheet  """
+        self.central_widget = QWidget()
+        layout = QVBoxLayout(self.central_widget)
 
-    LINK_CARD = "link_card"
-    SAMPLE_CARD = "sample_card"
-    HOME_INTERFACE = "home_interface"
-    ICON_INTERFACE = "icon_interface"
-    VIEW_INTERFACE = "view_interface"
-    SETTING_INTERFACE = "setting_interface"
-    GALLERY_INTERFACE = "gallery_interface"
-    NAVIGATION_VIEW_INTERFACE = "navigation_view_interface"
+        button = PrimaryPushButton("Get started ")
+        layout.addWidget(button)
+        layout.setAlignment(Qt.AlignCenter)
 
-    def path(self, theme=Theme.AUTO):
-        theme = qconfig.theme if theme == Theme.AUTO else theme
-        return f":/gallery/qss/{theme.value.lower()}/{self.value}.qss"
+        self.setCentralWidget(self.central_widget)
+
+        
+
+if __name__=='__main__':
+    app = QApplication(sys.argv)
+    w = Mainwindow()
+    w.show()
+    sys.exit(app.exec_())
