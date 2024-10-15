@@ -59,10 +59,11 @@ class SecondPage(QWidget):
         central_frame = QFrame(self)
         central_frame.setStyleSheet("background-color: white; border-radius: 10px;")
         central_layout = QVBoxLayout(central_frame)
-        # central_layout.setAlignment(Qt.AlignCenter)
+        central_layout.setAlignment(Qt.AlignCenter)
 
         central_frame.setMinimumSize(1000, 600)
         central_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
         
         central_layout.addStretch(1)
 

@@ -9,6 +9,7 @@ class Window(QMainWindow):
 
     def init_window(self):
         self.resize(900, 700)
+        
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)

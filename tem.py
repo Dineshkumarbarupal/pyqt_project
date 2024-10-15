@@ -1,30 +1,41 @@
-import sys 
-from PyQt5.QtWidgets import QMainWindow,QApplication,QWidget,QVBoxLayout
+import sys
+from PyQt5.QtWidgets import QMainWindow, QApplication,QStackedWidget,QVBoxLayout
 from PyQt5.QtCore import Qt
-from qfluentwidgets import PrimaryPushButton
+from temp import First_page,Second_page
+
 
 class Mainwindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.init_ui()
+        self.window()
 
-    def init_ui(self):
-        self.resize(800,500)
+    def window(self):
+        self.resize(900,600)
 
+        
+        desktop = QApplication.desktop().availableGeometry()
+        w, h = desktop.width(), desktop.height()
+        self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
 
-        self.central_widget = QWidget()
-        layout = QVBoxLayout(self.central_widget)
-
-        button = PrimaryPushButton("Get started ")
-        layout.addWidget(button)
-        layout.setAlignment(Qt.AlignCenter)
-
+        self.central_widget = QStackedWidget(self)
         self.setCentralWidget(self.central_widget)
 
+        self.first_page = First_page(self)
+        self.setCentralWidget(self.first_page)
+
+        self.second_page = Second_page(self)
+        self.setCentralWidget(self.second_page)
+  
+    def show_second_page(self):
+        self.central_widget.setCurrentWidget(self.second_page)
         
 
 if __name__=='__main__':
     app = QApplication(sys.argv)
-    w = Mainwindow()
-    w.show()
+    window = Mainwindow()
+    window.show()
     sys.exit(app.exec_())
+
+
+
+
