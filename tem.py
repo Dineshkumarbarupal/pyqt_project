@@ -21,10 +21,10 @@ class Mainwindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
 
         self.first_page = First_page(self)
-        self.setCentralWidget(self.first_page)
+        self.central_widget.addWidget(self.first_page)
 
         self.second_page = Second_page(self)
-        self.setCentralWidget(self.second_page)
+        self.central_widget.addWidget(self.second_page)
   
     def show_second_page(self):
         self.central_widget.setCurrentWidget(self.second_page)

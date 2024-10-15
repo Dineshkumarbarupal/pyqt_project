@@ -54,18 +54,21 @@ class SecondPage(QWidget):
     def init_ui(self, parent):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(20, 20, 20, 20)
-        layout.addStretch(1)
+        layout.setAlignment(Qt.AlignCenter)
+        # layout.addStretch(2)
 
         central_frame = QFrame(self)
         central_frame.setStyleSheet("background-color: white; border-radius: 10px;")
         central_layout = QVBoxLayout(central_frame)
         central_layout.setAlignment(Qt.AlignCenter)
 
-        central_frame.setMinimumSize(1000, 600)
+        central_frame.setMinimumSize(900, 500)
+        central_frame.setMaximumWidth(500)
         central_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         
-        
-        central_layout.addStretch(1)
+        layout.addStretch(1)
+        layout.addWidget(central_frame)
+        layout.addStretch(1)
 
         instructions = BodyLabel(
             "<b style='font-size: 16px;'>To set up WhatsApp on your computer</b><br><br>"
