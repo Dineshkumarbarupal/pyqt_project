@@ -17,7 +17,7 @@ class Window(QMainWindow):
         self.central_widget = QStackedWidget(self)
         self.setCentralWidget(self.central_widget)
 
-        # Initialize pages
+      
         self.first_page = FirstPage(self)
         self.central_widget.addWidget(self.first_page)
 

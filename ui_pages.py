@@ -91,7 +91,7 @@ class SecondPage(QWidget):
         link_label = BodyLabel('<a href="#">Link with phone number</a>')
         link_label.setAlignment(Qt.AlignLeft)
         link_label.setFont(QFont("Arial", 9, QFont.Bold))
-        link_label.setOpenExternalLinks(False)
+        # link_label.setOpenExternalLinks(False)
         link_label.linkActivated.connect(parent.show_third_page)  
         link_label.setStyleSheet("padding-left: 33px;")  
         central_layout.addWidget(link_label)

@@ -10,7 +10,7 @@ class Mainwindow(QMainWindow):
         self.window()
 
     def window(self):
-        self.resize(900,600)
+        self.resize(900,500)
 
         
         desktop = QApplication.desktop().availableGeometry()
@@ -26,6 +26,9 @@ class Mainwindow(QMainWindow):
         self.second_page = Second_page(self)
         self.central_widget.addWidget(self.second_page)
   
+    def show_first_page(self):
+        self.central_widget.setCurrentWidget(self.first_page)
+
     def show_second_page(self):
         self.central_widget.setCurrentWidget(self.second_page)
         
