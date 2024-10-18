@@ -66,19 +66,19 @@ class Second_page(QWidget):
         self.init_ui(parent)
 
     def init_ui(self, parent):  
-       
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(35, 35, 35, 35)
+        
+        layout = QHBoxLayout()
+        layout.setContentsMargins(32,32,32,32)
         layout.setAlignment(Qt.AlignCenter)
 
         central_frame = QFrame(self)
         central_frame.setStyleSheet("background-color: white; border-radius: 10px")
-        central_frame.setMinimumSize(900, 700)
-        central_frame.setMaximumWidth(800)
-        central_layout = QVBoxLayout(central_frame)
+        central_frame.setMinimumSize(900, 600)
+        central_frame.setMaximumWidth(500)
+        central_layout = QHBoxLayout(central_frame)
 
-        content_layout = QVBoxLayout()
-        content_layout.setContentsMargins(90, 150, 100, 60)
+        # content_layout = QVBoxLayout()
+        # content_layout.setContentsMargins(90, 150, 100, 60)
 
         instruction = BodyLabel(
             "<b style='font-size:18px;'>To set up WhatsApp on your computer</b><br><br>"
@@ -90,7 +90,7 @@ class Second_page(QWidget):
 
         instruction.setAlignment(Qt.AlignLeft)
         instruction.setFont(QFont("Arial", 11))
-        instruction.setStyleSheet("padding-left: 30px; line-height: 35px;")
+        instruction.setStyleSheet("padding-left: 100px;padding-top: 100; line-height: 100px;")
         instruction.setWordWrap(True)
       
         qr_label = QLabel(self)
@@ -98,20 +98,21 @@ class Second_page(QWidget):
         qr_label.setPixmap(pixmap)
         qr_label.setAlignment(Qt.AlignRight)
 
+        # qr_label.setStyleSheet("padding-right: 100;padding-bottom: 200;")
 
-        content_layout.addWidget(instruction)
-        content_layout.addWidget(qr_label)
+
+        central_layout.addWidget(instruction)
+        central_layout.addWidget(qr_label)
 
         link_label = BodyLabel("<a href='#' style='color: green;'>Link with phone number</a>")
         link_label.setAlignment(Qt.AlignLeft)
         link_label.setStyleSheet("padding-left: 35px")
         link_label.setFont(QFont("Arial", 9, QFont.Bold))
-        content_layout.addWidget(link_label)
-        
-        central_layout.addLayout(content_layout)
+        central_layout.addWidget(link_label)
 
-        central_layout.addStretch(1)
-        
+        # content_layout.addWidget(link_label)
+        # central_layout.addLayout(content_layout)
+
 
         back_button = QToolButton(self)
         back_button.setIcon(self.style().standardIcon(QStyle.SP_ArrowBack))

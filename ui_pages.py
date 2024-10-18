@@ -96,6 +96,8 @@ class SecondPage(QWidget):
         link_label.setStyleSheet("padding-left: 33px;")  
         central_layout.addWidget(link_label)
 
+    
+
         qr_label = QLabel(self)
         pixmap = QPixmap("qr2.png")  
         qr_label.setPixmap(pixmap)
