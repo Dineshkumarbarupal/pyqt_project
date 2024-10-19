@@ -58,7 +58,6 @@ class First_page(QWidget):
         new_height = self.height() * 0.5
         self.update_image_size(int(new_width),int(new_height))
         super().resizeEvent(event)
-
 class Second_page(QWidget):
     def __init__(self, parent):
         super().__init__()
@@ -66,19 +65,19 @@ class Second_page(QWidget):
         self.init_ui(parent)
 
     def init_ui(self, parent):  
-        
-        layout = QHBoxLayout()
-        layout.setContentsMargins(32,32,32,32)
+     
+        layout = QVBoxLayout()
+        layout.setContentsMargins(32, 32, 32, 32)
         layout.setAlignment(Qt.AlignCenter)
-
+     
         central_frame = QFrame(self)
         central_frame.setStyleSheet("background-color: white; border-radius: 10px")
         central_frame.setMinimumSize(900, 600)
         central_frame.setMaximumWidth(500)
-        central_layout = QHBoxLayout(central_frame)
+        
+        central_layout = QVBoxLayout(central_frame)
 
-        # content_layout = QVBoxLayout()
-        # content_layout.setContentsMargins(90, 150, 100, 60)
+        line_layout = QHBoxLayout()
 
         instruction = BodyLabel(
             "<b style='font-size:18px;'>To set up WhatsApp on your computer</b><br><br>"
@@ -87,39 +86,35 @@ class Second_page(QWidget):
             "<span style='color: gray;'>3. Tap <b>Linked devices</b> and then <b>Link a device</b></span><br><br>"
             "<span style='color: gray;'>4. Point your phone at this screen to capture the QR code</span><br><br>"
         )
-
         instruction.setAlignment(Qt.AlignLeft)
         instruction.setFont(QFont("Arial", 11))
-        instruction.setStyleSheet("padding-left: 100px;padding-top: 100; line-height: 100px;")
+        instruction.setStyleSheet("padding-left: 100px; line-height: 100px;padding-top:100px;")
         instruction.setWordWrap(True)
-      
+
         qr_label = QLabel(self)
         pixmap = QPixmap("qr2.png")  
         qr_label.setPixmap(pixmap)
+        qr_label.setStyleSheet("padding-top:100px;padding:100px")
         qr_label.setAlignment(Qt.AlignRight)
 
-        # qr_label.setStyleSheet("padding-right: 100;padding-bottom: 200;")
+        line_layout.addWidget(instruction)
+        line_layout.addWidget(qr_label)
 
-
-        central_layout.addWidget(instruction)
-        central_layout.addWidget(qr_label)
+        central_layout.addLayout(line_layout)
 
         link_label = BodyLabel("<a href='#' style='color: green;'>Link with phone number</a>")
         link_label.setAlignment(Qt.AlignLeft)
-        link_label.setStyleSheet("padding-left: 35px")
+        link_label.setStyleSheet("padding-left: 100px;padding-bottom:100px;")
         link_label.setFont(QFont("Arial", 9, QFont.Bold))
+
         central_layout.addWidget(link_label)
 
-        # content_layout.addWidget(link_label)
-        # central_layout.addLayout(content_layout)
-
+        layout.addWidget(central_frame)
 
         back_button = QToolButton(self)
         back_button.setIcon(self.style().standardIcon(QStyle.SP_ArrowBack))
         back_button.clicked.connect(parent.show_first_page)
+
         layout.addWidget(back_button, alignment=Qt.AlignLeft | Qt.AlignTop)
 
-        layout.addWidget(central_frame)
-
         self.setLayout(layout)
-        
