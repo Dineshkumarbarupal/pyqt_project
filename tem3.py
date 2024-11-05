@@ -1,64 +1,52 @@
 # coding:utf-8
 import sys
 
-from PyQt5.QtCore import Qt, QUrl
-from PyQt5.QtGui import QIcon, QDesktopServices
-from PyQt5.QtWidgets import QApplication, QFrame, QHBoxLayout, QVBoxLayout
-from qfluentwidgets import setTheme, Theme, SubtitleLabel, setFont, SplitFluentWindow
-from qfluentwidgets import FluentIcon as FIF
-from qframelesswindow.webengine import FramelessWebEngineView
+from PyQt5.QtCore import Qt, QEventLoop, QTimer, QSize
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication
 
+from qfluentwidgets import SplashScreen
+from qframelesswindow import FramelessWindow, StandardTitleBar
 
-class Widget(QFrame):
-
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
-        self.setObjectName("homeInterface")
-
-        self.webView = FramelessWebEngineView(self)
-        self.webView.load(QUrl("https://www.baidu.com/"))
-
-        self.vBoxLayout = QVBoxLayout(self)
-        self.vBoxLayout.setContentsMargins(0, 48, 0, 0)
-        self.vBoxLayout.addWidget(self.webView)
-
-
-class Window(SplitFluentWindow):
+class Demo(FramelessWindow):
 
     def __init__(self):
         super().__init__()
-
-        # create sub interface
-        self.homeInterface = Widget(self)
-
-        self.initNavigation()
-        self.initWindow()
-
-    def initNavigation(self):
-        self.addSubInterface(self.homeInterface, FIF.HOME, "Home")
-
-        # NOTE: enable acrylic effect
-        # self.navigationInterface.setAcrylicEnabled(True)
-
-    def initWindow(self):
-        self.resize(900, 700)
-        self.setWindowIcon(QIcon(':/qfluentwidgets/images/logo.png'))
+        self.resize(700, 600)
         self.setWindowTitle('PyQt-Fluent-Widgets')
+        self.setWindowIcon(QIcon('whatsapp_logo.png'))
 
-        desktop = QApplication.desktop().availableGeometry()
-        w, h = desktop.width(), desktop.height()
-        self.move(w//2 - self.width()//2, h//2 - self.height()//2)
+        # create splash screen and show window
+        self.splashScreen = SplashScreen(self.windowIcon(), self)
+        self.splashScreen.setIconSize(QSize(102, 102))
 
+        # customize the title bar of splash screen
+        # titleBar = StandardTitleBar(self.splashScreen)
+        # titleBar.setIcon(self.windowIcon())
+        # titleBar.setTitle(self.windowTitle())
+        # self.splashScreen.setTitleBar(titleBar)
 
+        self.show()
+
+        # create other subinterfaces
+        self.createSubInterface()
+
+        # close splash screen
+        self.splashScreen.finish()
+     
+    def createSubInterface(self):
+        loop = QEventLoop(self)
+        QTimer.singleShot(3000,loop.quit)
+        loop.exec()
+        
+        
 if __name__ == '__main__':
+    # enable dpi scale
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
-    # setTheme(Theme.DARK)
-
     app = QApplication(sys.argv)
-    w = Window()
+    w = Demo()
     w.show()
-    w.setMicaEffectEnabled(True)
     app.exec_()
