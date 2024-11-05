@@ -14,11 +14,12 @@ class Demo(FramelessWindow):
         super().__init__()
         self.resize(700, 600)
         self.setWindowTitle('PyQt-Fluent-Widgets')
-        self.setWindowIcon(QIcon('whatsapp_logo.png'))
+        self.setWindowIcon(QIcon('whatsapp3-removebg-preview.png'))
 
         # create splash screen and show window
         self.splashScreen = SplashScreen(self.windowIcon(), self)
-        self.splashScreen.setIconSize(QSize(102, 102))
+        self.splashScreen.setIconSize(QSize(333, 333))
+
 
         # customize the title bar of splash screen
         # titleBar = StandardTitleBar(self.splashScreen)
