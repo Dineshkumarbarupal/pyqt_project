@@ -1,14 +1,49 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication,QStackedWidget,QVBoxLayout
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,QSize,QEventLoop,QTimer
 from PyQt5.QtGui import QIcon
 from temp import First_page,Second_page,Third_page
+from qfluentwidgets import SplashScreen
+from qframelesswindow import FramelessWindow 
+
 
 class Mainwindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.window()
         self.initwindow()
+        self.initUi()
+
+# class initwindow(FramelessWindow):
+    def initUi(self):
+        self.resize(700, 600)
+        self.setWindowTitle('WhatsApp')
+        self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png'))
+        
+
+        # create splash screen and show window
+
+        self.splashScreen = SplashScreen(self.windowIcon(), self)
+        self.splashScreen.setIconSize(QSize(333, 333))
+
+        # customize the title bar of splash screen
+        # titleBar = StandardTitleBar(self.splashScreen)
+        # titleBar.setIcon(self.windowIcon())
+        # titleBar.setTitle(self.windowTitle())
+        # self.splashScreen.setTitleBar(titleBar)
+
+        self.show()
+
+        # create other subinterfaces
+        self.createSubInterface()
+
+        # close splash screen
+        self.splashScreen.finish()
+     
+    def createSubInterface(self):
+        loop = QEventLoop(self)
+        QTimer.singleShot(3000,loop.quit)
+        loop.exec()
 
     def initwindow(self):
             self.resize(900,400)

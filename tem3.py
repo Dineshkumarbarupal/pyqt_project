@@ -14,11 +14,12 @@ class Demo(FramelessWindow):
         super().__init__()
         self.resize(700, 600)
         self.setWindowTitle('PyQt-Fluent-Widgets')
-        self.setWindowIcon(QIcon('whatsapp3-removebg-preview.png'))
+        self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png'))
+        
 
         # create splash screen and show window
         self.splashScreen = SplashScreen(self.windowIcon(), self)
-        self.splashScreen.setIconSize(QSize(333, 333))
+        self.splashScreen.setIconSize(QSize(370, 370))
 
 
         # customize the title bar of splash screen
@@ -39,6 +40,7 @@ class Demo(FramelessWindow):
         loop = QEventLoop(self)
         QTimer.singleShot(3000,loop.quit)
         loop.exec()
+    
         
         
 if __name__ == '__main__':

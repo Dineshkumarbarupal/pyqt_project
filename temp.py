@@ -6,7 +6,7 @@ from qfluentwidgets import BodyLabel,PrimaryPushButton,PushButton,DropDownPushBu
 class First_page(QWidget):
     def __init__(self,parent):
         super().__init__()
-        self.pixmap = QPixmap("whatsapp.png")
+        self.pixmap = QPixmap("whatsapp3_logo-removebg-preview.png")
         self.init_ui(parent)
 
     def init_ui(self,parant):
