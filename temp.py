@@ -83,7 +83,7 @@ class Second_page(QWidget):
             "<span style='color: gray;'>3. Tap <b>Linked devices</b> and then <b>Link a device</b></span><br><br>"
             "<span style='color: gray;'>4. Point your phone at this screen to capture the QR code</span><br><br>"
         )
-        
+
         instruction.setAlignment(Qt.AlignLeft)
         instruction.setFont(QFont("Arial", 11))
         instruction.setStyleSheet("padding-left: 100px; line-height: 100px;padding-top:100px;")
@@ -118,7 +118,6 @@ class Second_page(QWidget):
         layout.addWidget(back_button, alignment=Qt.AlignLeft | Qt.AlignTop)
 
         self.setLayout(layout)
-
 
 
 class Third_page(QWidget):

@@ -4,7 +4,6 @@ import sys
 from PyQt5.QtCore import Qt, QEventLoop, QTimer, QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
-
 from qfluentwidgets import SplashScreen
 from qframelesswindow import FramelessWindow, StandardTitleBar
 
@@ -16,11 +15,9 @@ class Demo(FramelessWindow):
         self.setWindowTitle('PyQt-Fluent-Widgets')
         self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png'))
         
-
         # create splash screen and show window
-        self.splashScreen = SplashScreen(self.windowIcon(), self)
-        self.splashScreen.setIconSize(QSize(370, 370))
-
+        self.splashscreen = SplashScreen(self.windowIcon(), self)
+        self.splashscreen.setIconSize(QSize(333,333))
 
         # customize the title bar of splash screen
         # titleBar = StandardTitleBar(self.splashScreen)
@@ -34,14 +31,12 @@ class Demo(FramelessWindow):
         self.createSubInterface()
 
         # close splash screen
-        self.splashScreen.finish()
+        self.splashscreen.finish()
      
     def createSubInterface(self):
         loop = QEventLoop(self)
         QTimer.singleShot(3000,loop.quit)
         loop.exec()
-    
-        
         
 if __name__ == '__main__':
     # enable dpi scale

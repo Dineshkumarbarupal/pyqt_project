@@ -6,52 +6,41 @@ from temp import First_page,Second_page,Third_page
 from qfluentwidgets import SplashScreen
 from qframelesswindow import FramelessWindow 
 
-
 class Mainwindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.window()
-        self.initwindow()
         self.initUi()
+        self.initwindow()
+        self.window()
 
-# class initwindow(FramelessWindow):
     def initUi(self):
         self.resize(700, 600)
         self.setWindowTitle('WhatsApp')
         self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png'))
-        
 
-        # create splash screen and show window
-
-        self.splashScreen = SplashScreen(self.windowIcon(), self)
-        self.splashScreen.setIconSize(QSize(333, 333))
-
-        # customize the title bar of splash screen
-        # titleBar = StandardTitleBar(self.splashScreen)
-        # titleBar.setIcon(self.windowIcon())
-        # titleBar.setTitle(self.windowTitle())
-        # self.splashScreen.setTitleBar(titleBar)
+        self.splashscreen = SplashScreen(self.windowIcon(),self)
+        self.splashscreen.setIconSize(QSize(333,333))
 
         self.show()
 
         # create other subinterfaces
         self.createSubInterface()
-
+        
         # close splash screen
-        self.splashScreen.finish()
+        self.splashscreen.finish()
      
     def createSubInterface(self):
         loop = QEventLoop(self)
-        QTimer.singleShot(3000,loop.quit)
+        QTimer.singleShot(4000,loop.quit)
         loop.exec()
 
     def initwindow(self):
             self.resize(900,400)
             self.setWindowTitle('WhatsApp')
             self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp_logo.png'))
-            
+             
             desktop = QApplication.desktop().availableGeometry()
-            w,h = desktop.width(),desktop.height()
+            w,h  = desktop.width(),desktop.height()
             self.move(w//2 - self.width(), h//2 - self.height())
 
     def window(self):
@@ -67,7 +56,7 @@ class Mainwindow(QMainWindow):
 
         self.third_page = Third_page(self)
         self.central_widget.addWidget(self.third_page)
-  
+
     def show_first_page(self):
         self.central_widget.setCurrentWidget(self.first_page)
 
@@ -76,7 +65,6 @@ class Mainwindow(QMainWindow):
 
     def show_third_page(self):
         self.central_widget.setCurrentWidget(self.third_page)
-        
 
 if __name__=='__main__':
     QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)

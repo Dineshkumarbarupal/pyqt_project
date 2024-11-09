@@ -1,4 +1,5 @@
 import sys
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from ui_pages import FirstPage, SecondPage, ThirdPage
 
@@ -9,7 +10,7 @@ class Window(QMainWindow):
 
     def init_window(self):
         self.resize(900, 700)
-        
+
         desktop = QApplication.desktop().availableGeometry()
         w, h = desktop.width(), desktop.height()
         self.move(w // 2 - self.width() // 2, h // 2 - self.height() // 2)
@@ -17,7 +18,6 @@ class Window(QMainWindow):
         self.central_widget = QStackedWidget(self)
         self.setCentralWidget(self.central_widget)
 
-      
         self.first_page = FirstPage(self)
         self.central_widget.addWidget(self.first_page)
 
@@ -34,6 +34,11 @@ class Window(QMainWindow):
         self.central_widget.setCurrentWidget(self.third_page)
 
 if __name__ == '__main__':
+    QApplication.setHighDpiScaleFactorRoundingPolicy(
+        Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
+
     app = QApplication(sys.argv)
     window = Window()
     window.show()
