@@ -75,7 +75,3 @@ if __name__=='__main__':
     window = Mainwindow()
     window.show()
     sys.exit(app.exec_())
-
-
-
-

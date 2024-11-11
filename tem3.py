@@ -3,7 +3,7 @@ import sys
 
 from PyQt5.QtCore import Qt, QEventLoop, QTimer, QSize
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QMainWindow
 from qfluentwidgets import SplashScreen
 from qframelesswindow import FramelessWindow, StandardTitleBar
 
@@ -18,6 +18,7 @@ class Demo(FramelessWindow):
         # create splash screen and show window
         self.splashscreen = SplashScreen(self.windowIcon(), self)
         self.splashscreen.setIconSize(QSize(333,333))
+        self.splashscreen.show()
 
         # customize the title bar of splash screen
         # titleBar = StandardTitleBar(self.splashScreen)
@@ -37,6 +38,7 @@ class Demo(FramelessWindow):
         loop = QEventLoop(self)
         QTimer.singleShot(3000,loop.quit)
         loop.exec()
+              
         
 if __name__ == '__main__':
     # enable dpi scale

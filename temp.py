@@ -81,7 +81,7 @@ class Second_page(QWidget):
             "<span style='color: gray;'>1. Open WhatsApp on your phone</span><br><br>"
             "<span style='color: gray;'>2. Tap <b>Menu</b> on Android, or <b>Settings</b> on iPhone</span><br><br>"
             "<span style='color: gray;'>3. Tap <b>Linked devices</b> and then <b>Link a device</b></span><br><br>"
-            "<span style='color: gray;'>4. Point your phone at this screen to capture the QR code</span><br><br>"
+            "<span style='color: gray;'>4. point your phone at this screen to capture the QR code</span><br><br>"
         )
 
         instruction.setAlignment(Qt.AlignLeft)
