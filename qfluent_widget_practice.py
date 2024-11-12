@@ -7,9 +7,13 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout
 from qfluentwidgets import PrimaryPushButton, LineEdit
 
+def get_data():
+    global link
+    link = lineEdit.get()
+
 def automation():
     driver = webdriver.Chrome()
-    driver.get(lineEdit)
+    driver.get(link)
 
 class Mainwindow(QWidget):
     def __init__(self):

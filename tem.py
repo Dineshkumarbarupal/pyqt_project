@@ -1,38 +1,46 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication,QStackedWidget,QVBoxLayout
-from PyQt5.QtCore import Qt,QSize,QEventLoop,QTimer
-from PyQt5.QtGui import QIcon
-from temp import First_page,Second_page,Third_page
-from qfluentwidgets import SplashScreen
-from qframelesswindow import FramelessWindow 
+from PyQt5.QtWidgets import QMainWindow, QApplication, QStackedWidget, QDesktopWidget, QSplashScreen
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QIcon, QPixmap
+from temp import First_page, Second_page, Third_page
 
-class Mainwindow(QMainWindow):
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.initUi()
-        self.initwindow()
-        self.window()
-
-    def initUi(self):
-        self.resize(700, 600)
+        self.splash_screen_width = 200
+        self.splash_screen_height = 200
+        self.setFixedSize(960, 720)  # main window dimensions
         self.setWindowTitle('WhatsApp')
         self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png'))
 
-        self.splashscreen = SplashScreen(self.windowIcon(),self)
-        self.splashscreen.setIconSize(QSize(333,333))
+        pixmap = QPixmap('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png').scaled(
+            self.splash_screen_width, self.splash_screen_height, Qt.KeepAspectRatio
+        )
 
+        self.splashScreen = QSplashScreen(pixmap, Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+
+        screen_geometry = QDesktopWidget().screenGeometry()
+        x = (screen_geometry.width() - self.splash_screen_width) // 2
+        y = (screen_geometry.height() -self.splash_screen_height) // 2
+        self.splashScreen.move(x, y)
+
+        self.splashScreen.show()
+        QTimer.singleShot(3000, self.show_main_window)
+
+        self.center_main_window()
+        self.initwindow()
+        self.window()
+      
+
+    def show_main_window(self):
+        self.splashScreen.finish(self)
         self.show()
 
-        # create other subinterfaces
-        self.createSubInterface()
-        
-        # close splash screen
-        self.splashscreen.finish()
-     
-    def createSubInterface(self):
-        loop = QEventLoop(self)
-        QTimer.singleShot(4000,loop.quit)
-        loop.exec()
+    def center_main_window(self):
+        screen_geometry = QDesktopWidget().screenGeometry()
+        frame_geometry = self.frameGeometry()
+        frame_geometry.moveCenter(screen_geometry.center())
+        self.move(frame_geometry.topLeft())
 
     def initwindow(self):
             self.resize(900,400)
@@ -67,11 +75,7 @@ class Mainwindow(QMainWindow):
         self.central_widget.setCurrentWidget(self.third_page)
 
 if __name__=='__main__':
-    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-
     app = QApplication(sys.argv)
-    window = Mainwindow()
-    window.show()
+    w = MainWindow()
+    w.show()
     sys.exit(app.exec_())
