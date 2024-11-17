@@ -8,7 +8,8 @@ import sys
 from PyQt5.QtCore import Qt, QThread, QTimer, QSize, QEventLoop
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QSplashScreen
-from qfluentwidgets import PrimaryPushButton, LineEdit, BodyLabel
+from qfluentwidgets import PrimaryPushButton, LineEdit, BodyLabel, SplashScreen
+from qframelesswindow import FramelessWindow,StandardTitleBar
 
 class Automationworker(QThread):
     def __init__(self, url):
@@ -19,6 +20,7 @@ class Automationworker(QThread):
         driver = webdriver.Chrome()
         driver.get(self.url)
         driver.maximize_window()
+    
 
         try:
             google_search = WebDriverWait(driver, 20).until(Ec.element_to_be_clickable((By.XPATH, '//*[@id="APjFqb"]')))
@@ -37,38 +39,52 @@ class Automationworker(QThread):
         sleep(30)
         driver.quit()
 
-class Mainwindow(QWidget):
+class Mainwindow(FramelessWindow):
+
     def __init__(self):
         super().__init__()
-        self.init_ui()
-        self.setStyleSheet("background: rgb(001,225,225);")  
+        self.resize(700, 600)
+        # self.setWindowTitle('Automation')
         self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\automation.png'))
 
-    def init_ui(self):
-        self.resize(900, 600)
-        self.setWindowTitle('PyQt-Fluent-Widgets')
-        self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png'))
+        # create splash screen and show window
+        splashScreen = SplashScreen(self.windowIcon(), self)
+        splashScreen.setIconSize(QSize(150, 150))
+
+        # customize the title bar of splash screen
+        # titleBar = StandardTitleBar(self.splashScreen)
+        # titleBar.setIcon(self.windowIcon())
+        # titleBar.setTitle(self.windowTitle())
+        # self.splashScreen.setTitleBar(titleBar)
+
+        self.show()
 
         # create other subinterfaces
         self.createSubInterface()
 
+        # close splash screen
+        splashScreen.finish()
+
     def createSubInterface(self):
+        loop = QEventLoop(self)
+        QTimer.singleShot(3000, loop.quit)
+        loop.exec()
+
         layout = QVBoxLayout(self)
-        layout.addStretch(1) 
+        layout.addStretch(2) 
         
         label = BodyLabel("Enter website which you want to automate")
         layout.addWidget(label, alignment=Qt.AlignCenter)
 
-        layout.addSpacing(4)
+        layout.addSpacing(10)
 
         self.lineEdit = LineEdit()
         self.lineEdit.setPlaceholderText("https://www.example.com")
         layout.addWidget(self.lineEdit, alignment=Qt.AlignCenter)
         
-        layout.addSpacing(1)
-
+        layout.addSpacing(8)
         button = PrimaryPushButton("Start")
-        button.setFixedSize(150, 40) 
+        button.setFixedSize(130, 30) 
         layout.addWidget(button, alignment=Qt.AlignCenter)
         button.clicked.connect(self.automation)
 
@@ -80,18 +96,10 @@ class Mainwindow(QWidget):
             self.worker = Automationworker(url)
             self.worker.start()
         else:
-            print("please enter a valid url....")
+            print("please enter a valid url...")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
-    # Load and display splash screen
-    pixmap = QPixmap('C:\\Users\\NSG\\Desktop\\qfluent widget\\whatsapp3-removebg-preview.png')
-    splashScreen = QSplashScreen(pixmap, Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
-    splashScreen.show()
-
-    # Wait to simulate loading time (3 seconds)
-    QTimer.singleShot(3000, splashScreen.close)  # Close after 3 seconds
 
     # Show main window
     w = Mainwindow()
