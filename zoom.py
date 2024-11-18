@@ -1,13 +1,13 @@
 # coding:utf-8
 import sys
-
-from PyQt5.QtCore import Qt, QUrl
+from PyQt5.QtCore import Qt, QUrl,QSize,QTimer,QEventLoop
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5.QtWidgets import QApplication, QFrame, QHBoxLayout
 from qfluentwidgets import (NavigationItemPosition, MessageBox, setTheme, Theme, FluentWindow,
                             NavigationAvatarWidget, qrouter, SubtitleLabel, setFont, InfoBadge,
-                            InfoBadgePosition, FluentBackgroundTheme)
+                            InfoBadgePosition, FluentBackgroundTheme,SplashScreen)
 from qfluentwidgets import FluentIcon as FIF
+from qframelesswindow import FramelessWindow 
 
 class Widget(QFrame):
 
@@ -21,11 +21,36 @@ class Widget(QFrame):
         self.hBoxLayout.addWidget(self.label, 1, Qt.AlignCenter)
         self.setObjectName(text.replace(' ', '-'))
 
-
-class Window(FluentWindow):
+class Mainwindow(FluentWindow):
 
     def __init__(self):
         super().__init__()
+        self.resize(700, 600)
+        self.setWindowTitle('Automation')
+        self.setWindowIcon(QIcon('C:\\Users\\NSG\\Desktop\\qfluent widget\\automation.png'))
+
+        # create splash screen and show window
+        splashScreen = SplashScreen(self.windowIcon(), self)
+        splashScreen.setIconSize(QSize(150, 150))
+
+        # customize the title bar of splash screen
+        # titleBar = StandardTitleBar(self.splashScreen)
+        # titleBar.setIcon(self.windowIcon())
+        # titleBar.setTitle(self.windowTitle())
+        # self.splashScreen.setTitleBar(titleBar)
+
+        self.show()
+
+        # create other subinterfaces
+        self.createSubInterface()
+
+        # close splash screen
+        splashScreen.finish()
+
+    def createSubInterface(self):
+        loop = QEventLoop(self)
+        QTimer.singleShot(3000, loop.quit)
+        loop.exec()
 
         # create sub interface
         self.homeInterface = Widget('Search Interface', self)
@@ -110,6 +135,6 @@ if __name__ == '__main__':
     # setTheme(Theme.DARK)
 
     app = QApplication(sys.argv)
-    w = Window()
+    w = Mainwindow()
     w.show()
     app.exec_()

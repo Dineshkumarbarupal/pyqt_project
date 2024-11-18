@@ -61,15 +61,30 @@
 # stu1 = Student("dinesh")
 # print(stu1.name)
 
-class cars:
-    name = "bmw"
-    def __init__(self, name):
-        self.name= name
+# class cars:
+#     name = "bmw"
+#     def __init__(self, name):
+#         self.name= name
 
-car1 = cars("marcidies")
-print(car1.name)
-car2 = cars("lemborgini")
-print(car2.name)
+# car1 = cars("marcidies")
+# print(car1.name)
+# car2 = cars("lemborgini")
+# print(car2.name)
+
+# class Student:
+#     def __init__(self,name,age):
+#         self.name = name
+#         self.age = age
+#         print("this a cunstructor")
+
+# stu1 = Student("dinesh",19)
+# print(stu1.name)
+# print(stu1.age)
+
+
+
+
+
 
 
 

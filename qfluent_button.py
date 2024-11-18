@@ -13,15 +13,12 @@ from qfluentwidgets import (Action, DropDownPushButton, DropDownToolButton, Push
                             CustomStyleSheet)
 from qfluentwidgets import FluentIcon as FIF
 
-
 class ButtonView(QWidget):
 
     def __init__(self):
         super().__init__()
         # setTheme(Theme.DARK)
         self.setStyleSheet("ButtonView{background: rgb(255,255,255)}")
-
-
 
 class ToolButtonDemo(ButtonView):
 
@@ -103,7 +100,6 @@ class ToolButtonDemo(ButtonView):
         self.gridLayout.addWidget(self.pillToolButton3, 4, 2)
 
         self.resize(300, 300)
-
 
 class PushButtonDemo(ButtonView):
 

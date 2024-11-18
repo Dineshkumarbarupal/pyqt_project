@@ -31,7 +31,6 @@ class MainWindow(QMainWindow):
         self.initwindow()
         self.window()
       
-
     def show_main_window(self):
         self.splashScreen.finish(self)
         self.show()
