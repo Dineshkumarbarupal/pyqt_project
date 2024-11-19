@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer, QSize, QEventLoop
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout,QLabel
 from qfluentwidgets import PrimaryPushButton, LineEdit, BodyLabel, SplashScreen
 from qframelesswindow import FramelessWindow
 from selenium import webdriver
@@ -64,6 +64,9 @@ class Mainwindow(FramelessWindow):
         QTimer.singleShot(3000, loop.quit)
         loop.exec()
 
+        if self.layout() is not None:
+            return
+
         layout = QVBoxLayout(self)
         layout.addStretch(2) 
         
@@ -75,6 +78,10 @@ class Mainwindow(FramelessWindow):
         self.lineEdit3 = LineEdit()
         self.lineEdit3.setPlaceholderText("Sereach Something.")
         layout.addWidget(self.lineEdit3,alignment=Qt.AlignCenter)
+
+        self.lineEdit4 = LineEdit()
+        self.lineEdit4.setPlaceholderText("Fill form")
+        layout.addWidget(self.lineEdit4,alignment=Qt.AlignCenter)
 
         self.lineEdit = LineEdit()
         self.lineEdit.setPlaceholderText("https://www.example.com")
@@ -90,8 +97,19 @@ class Mainwindow(FramelessWindow):
         layout.addWidget(button, alignment=Qt.AlignCenter)
         button.clicked.connect(self.automation)
 
-        layout.addStretch(3)
+        button2 = PrimaryPushButton("Next page")
+        button2.setFixedSize(130,30)
+        button2.clicked.connect(self.second_page)
+        layout.addWidget(button2,alignment=Qt.AlignCenter)
+         
+        layout.addStretch(3)  
+  
+    def second_page(self):
+        layout = QVBoxLayout(self)
 
+        label = QLabel("This is the first page.")
+        layout.addWidget(label,alignment= Qt.AlignCenter)
+  
     def automation(self):
         url = self.lineEdit.text()
         search = self.lineEdit3.text()
