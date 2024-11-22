@@ -22,6 +22,7 @@ class Automationworker(QThread):
         driver = webdriver.Chrome()
         driver.get(self.url)
         driver.maximize_window()
+
         try:
             google_search = WebDriverWait(driver, 20).until(Ec.element_to_be_clickable((By.XPATH, '//*[@id="APjFqb"]')))
             google_search.send_keys(self.search)
@@ -59,19 +60,12 @@ class Mainwindow(FramelessWindow):
         splashScreen.finish()
 
     def createSubInterface(self):
-        self. central_widget = QStackedWidget(self)
-        self.setLayout(QVBoxLayout())
-        self.layout().addWidget(self.central_widget)
-      
-        self.main_window = QWidget()
-        layout = QVBoxLayout(self.main_window)
+        loop = QEventLoop(self)
+        QTimer.singleShot(3000, loop.quit)
+        loop.exec()
 
-        # loop = QEventLoop(self)
-        # QTimer.singleShot(3000, loop.quit)
-        # loop.exec()
-
-        # if self.layout() is not None:
-        #     return
+        if self.layout() is not None:
+            return
 
         layout = QVBoxLayout(self)
         layout.addStretch(2) 
@@ -126,12 +120,13 @@ class Mainwindow(FramelessWindow):
 
     def next_page(self):
         
-       
-        self.setCent(self.central_widget)
+        self. central_widget = QStackedWidget(self)
+        self.setCentralWidget(self.central_widget)
 
-        second_page = Second_page(self)
-        self.central_widget.addWidget(second_page)
-        self.central_widget.setCentralWidget(second_page)
+
+        display_page = Second_page(self)
+        self.central_widget.addWidget(display_page)
+
 
 class Second_page(QWidget):
     def __init__(self):
