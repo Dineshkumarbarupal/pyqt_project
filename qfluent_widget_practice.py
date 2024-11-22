@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer, QSize, QEventLoop
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout,QLabel
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout,QLabel,QStackedWidget
 from qfluentwidgets import PrimaryPushButton, LineEdit, BodyLabel, SplashScreen
 from qframelesswindow import FramelessWindow
 from selenium import webdriver
@@ -22,7 +22,6 @@ class Automationworker(QThread):
         driver = webdriver.Chrome()
         driver.get(self.url)
         driver.maximize_window()
-
         try:
             google_search = WebDriverWait(driver, 20).until(Ec.element_to_be_clickable((By.XPATH, '//*[@id="APjFqb"]')))
             google_search.send_keys(self.search)
@@ -60,12 +59,19 @@ class Mainwindow(FramelessWindow):
         splashScreen.finish()
 
     def createSubInterface(self):
-        loop = QEventLoop(self)
-        QTimer.singleShot(3000, loop.quit)
-        loop.exec()
+        self. central_widget = QStackedWidget(self)
+        self.setLayout(QVBoxLayout())
+        self.layout().addWidget(self.central_widget)
+      
+        self.main_window = QWidget()
+        layout = QVBoxLayout(self.main_window)
 
-        if self.layout() is not None:
-            return
+        # loop = QEventLoop(self)
+        # QTimer.singleShot(3000, loop.quit)
+        # loop.exec()
+
+        # if self.layout() is not None:
+        #     return
 
         layout = QVBoxLayout(self)
         layout.addStretch(2) 
@@ -91,7 +97,7 @@ class Mainwindow(FramelessWindow):
         self.lineEdit2.setPlaceholderText("Extracted text will appear here")
         layout.addWidget(self.lineEdit2, alignment=Qt.AlignCenter)
         
-        layout.addSpacing(8)
+        layout.addSpacing(8)  
         button = PrimaryPushButton("Start")
         button.setFixedSize(130, 30) 
         layout.addWidget(button, alignment=Qt.AlignCenter)
@@ -99,16 +105,10 @@ class Mainwindow(FramelessWindow):
 
         button2 = PrimaryPushButton("Next page")
         button2.setFixedSize(130,30)
-        button2.clicked.connect(self.second_page)
+        button2.clicked.connect(self.next_page)
         layout.addWidget(button2,alignment=Qt.AlignCenter)
          
         layout.addStretch(3)  
-  
-    def second_page(self):
-        layout = QVBoxLayout(self)
-
-        label = QLabel("This is the first page.")
-        layout.addWidget(label,alignment= Qt.AlignCenter)
   
     def automation(self):
         url = self.lineEdit.text()
@@ -123,6 +123,23 @@ class Mainwindow(FramelessWindow):
     def display_text(self, text):
         """Update lineEdit2 with extracted text once thread finishes."""
         self.lineEdit2.setText(text)
+
+    def next_page(self):
+        
+       
+        self.setCent(self.central_widget)
+
+        second_page = Second_page(self)
+        self.central_widget.addWidget(second_page)
+        self.central_widget.setCentralWidget(second_page)
+
+class Second_page(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout(self)
+
+        label = QLabel("This is the first page.")
+        layout.addWidget(label,alignment= Qt.AlignCenter)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
